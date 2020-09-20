@@ -12,50 +12,47 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
-public class Barbers extends JFrame {
+public class LingardSchool extends JFrame {
 	private Random rand = new Random();
-
-	Barbers() {
+	LingardSchool() {
 		// 레이아웃
 		Status s = new Status();
 		Container c = getContentPane();
-		setTitle("미용실에 간 캉요미");
+		setTitle("린가드의 교실");
 		c.setLayout(new FlowLayout());
 		c.setBackground(Color.WHITE);
 
-		JLabel barbers = new JLabel("미용실");
-		barbers.setFont(new Font("맑은고딕", Font.BOLD, 20));
-		c.add(barbers);
+		// 안내문
+		JLabel info1 = new JLabel("어서오세요 린가드의 축구교실입니다. 이름이 어떻게 되시죠?");
+		info1.setFont(new Font("맑은고딕", Font.BOLD, 20));
+		c.add(info1);
+
 		// 사진
-		ImageIcon imageIcon = new ImageIcon("images/barbers.jpg");
+		ImageIcon imageIcon = new ImageIcon("images/lingardSchool.jpg");
 		JLabel imageLabel = new JLabel(imageIcon);
 		c.add(imageLabel);
 
 		// 안내문
-		JLabel info = new JLabel("-미용실에 간 캉테는 머리를 자르려 합니다-");
-		info.setFont(new Font("맑은고딕", Font.PLAIN, 15));
-		c.add(info);
 		JLabel info2 = new JLabel("비용은 10￡입니다.");
 		info2.setFont(new Font("맑은고딕", Font.PLAIN, 15));
 		c.add(info2);
 
-		// 자른다
-		JButton btnCut = new JButton("자른다");
-		c.add(btnCut);
-		btnCut.addActionListener(new ActionListener() {
+		// 축구를 배운다
+		JButton btnLearn = new JButton("축구를 배운다");
+		c.add(btnLearn);
+		btnLearn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JButton b = (JButton) e.getSource();
-				if (b.getText().equals("자른다")) {
+				if (b.getText().equals("축구를 배운다")) {
 					s.SubSalary(10);
 					dispose();
 					int r = rand.nextInt(2);
 					if (r == 0)
-						new BarbersSuccess();
+						new HowToPlaySoccer();
 					else
-						new BarbersFailure();
+						new HowToDance();
 				}
 			};
 		});
@@ -72,7 +69,7 @@ public class Barbers extends JFrame {
 				}
 			};
 		});
-		setSize(350, 500);
+		setSize(650, 500);
 		setVisible(true);
 	}
 }

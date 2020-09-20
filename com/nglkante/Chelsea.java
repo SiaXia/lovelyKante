@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class Chelsea extends JFrame {
-	private Container c = getContentPane();
+	Container c = getContentPane();
 	Status s = new Status();
 
 	Chelsea() {
@@ -28,7 +28,7 @@ public class Chelsea extends JFrame {
 		c.add(team);
 
 		// 안내문
-		JLabel info = new JLabel("급여 20￡, 실력 10 이상 이적");
+		JLabel info = new JLabel("급여 30￡, 실력 10 이상 이적");
 		info.setFont(new Font("맑은고딕", Font.PLAIN, 15));
 		c.add(info);
 
@@ -54,14 +54,11 @@ public class Chelsea extends JFrame {
 				if (b.getText().equals("시즌경기")) {
 					s.AddSalary(1);
 					salary.setText("급여: " + s.getSalary() + "￡");
-					/*
-					// 레스터 이적
-					if (s.isTranfer() == 2 && s.getTeam() == 1) {
+					// 결말
+					if (s.isTranfer() == 4 && s.getTeam() == 3) {
 						dispose();
-						new LeisterCity();
-						s.setTeam();
+						new Ending();
 					}
-					*/
 				}
 			}
 		});
@@ -76,19 +73,31 @@ public class Chelsea extends JFrame {
 				if (b.getText().equals("훈련")) {
 					if (s.tranning()) {
 						skill.setText("실력: " + s.getSkill());
-						/*
-						// 레스터 이적
-						if (s.isTranfer() == 2 && s.getTeam() == 1) {
+						// 결말
+						if (s.isTranfer() == 4 && s.getTeam() == 3) {
 							dispose();
-							new LeisterCity();
-							s.setTeam();
+							new Ending();
 						}
-						*/
 					}
 				}
 			};
 
 		});
+		
+		// 린가드의 축구교실
+		JButton btnLingard = new JButton("린가드의 축구교실");
+		c.add(btnLingard);
+		btnLingard.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JButton b = (JButton) e.getSource();
+				if (b.getText().equals("린가드의 축구교실") && s.getSalary() >= 10) {
+					setVisible(false);
+					new LingardSchool();
+				}
+			};
+		});
+		
 		setSize(450, 530);
 		setVisible(true);
 	}

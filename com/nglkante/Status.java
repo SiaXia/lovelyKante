@@ -3,7 +3,7 @@ package com.nglkante;
 import java.util.Random;
 
 public class Status {
-	private static int mTeam = 1; // 1 = 2부리그, 2 = 레스터, 3 = 첼시
+	private static int mTeam = 1; // 1 = 2부리그, 2 = 레스터, 3 = 첼시, 4 = 결말
 	private static int salary = 0;
 	private static int skill = 0;
 	// private int addend = 1;
@@ -52,7 +52,9 @@ public class Status {
 
 	// 이적여부
 	public int isTranfer() {
-		if (salary >= 20 && skill >= 10) // 첼시
+		if (salary >= 30 && skill >= 10) // 첼시
+			return 4;
+		else if (salary >= 20 && skill >= 5) // 첼시
 			return 3;
 		else if (salary >= 10 && skill >= 1) // 레스터
 			return 2;

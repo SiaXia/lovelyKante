@@ -28,7 +28,7 @@ public class LeisterCity extends JFrame {
 		c.add(team);
 
 		// 안내문
-		JLabel info = new JLabel("급여 20￡, 실력 10 이상 이적");
+		JLabel info = new JLabel("급여 20￡, 실력 5 이상 이적");
 		info.setFont(new Font("맑은고딕", Font.PLAIN, 15));
 		c.add(info);
 
@@ -84,7 +84,6 @@ public class LeisterCity extends JFrame {
 				}
 			};
 		});
-
 		// 미용실
 		JButton btnBarbers = new JButton("미용실");
 		c.add(btnBarbers);
