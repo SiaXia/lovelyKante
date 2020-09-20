@@ -43,8 +43,8 @@ public class Start extends JFrame{
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				setVisible(false);
-				new Main();
+				dispose();
+				new SecondDivision();
 			}
 			public void mouseClicked(MouseEvent e) {}
 			public void mouseEntered(MouseEvent e) {}
