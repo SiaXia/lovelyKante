@@ -49,6 +49,7 @@ public class Ending extends JFrame {
 		});
 
 		setSize(630, 480);
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 }

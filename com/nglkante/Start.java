@@ -10,6 +10,7 @@ public class Start extends JFrame{
 	public JFrame frame=new JFrame();
 	private ImageIcon[] startIcon = {
 			new ImageIcon("images/start.jpg"),
+			new ImageIcon("images/rollover.jpg"),
 			new ImageIcon("images/pressed.jpg")};
 	private JLabel imageLabel=new JLabel(startIcon[0]);
 	
@@ -34,20 +35,27 @@ public class Start extends JFrame{
 		c.add(textLabel);
 		
 		setSize(450,600);
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 		class StartML implements MouseListener{
 			@Override
 			public void mousePressed(MouseEvent e) {
-				imageLabel.setIcon(startIcon[1]);
+				imageLabel.setIcon(startIcon[2]);
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				dispose();
 				new SecondDivision();
 			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				imageLabel.setIcon(startIcon[1]);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				imageLabel.setIcon(startIcon[0]);
+			}
 			public void mouseClicked(MouseEvent e) {}
-			public void mouseEntered(MouseEvent e) {}
-			public void mouseExited(MouseEvent e) {}
 		}
 }

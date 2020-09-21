@@ -16,6 +16,10 @@ public class Chelsea extends JFrame {
 	Container c = getContentPane();
 	Status s = new Status();
 
+	JLabel salary = new JLabel("급여: " + s.getSalary() + "￡");
+	JLabel skill = new JLabel("실력: " + s.getSkill());
+	JButton btnLingard = new JButton("축구교실");
+
 	Chelsea() {
 		// 레이아웃
 		setTitle("첼시를 뒤흔드는 캉요미");
@@ -28,7 +32,7 @@ public class Chelsea extends JFrame {
 		c.add(team);
 
 		// 안내문
-		JLabel info = new JLabel("급여 30￡, 실력 10 이상 이적");
+		JLabel info = new JLabel("급여 " + s.getEndingSalary() + "￡, 실력 " + s.getEndingSkill() + "이상 이적");
 		info.setFont(new Font("맑은고딕", Font.PLAIN, 15));
 		c.add(info);
 
@@ -37,12 +41,7 @@ public class Chelsea extends JFrame {
 		JLabel imageLabel = new JLabel(imageIcon);
 		c.add(imageLabel);
 
-		// 급여
-		JLabel salary = new JLabel("급여: " + s.getSalary() + "￡");
 		c.add(salary);
-
-		// 실력
-		JLabel skill = new JLabel("실력: " + s.getSkill());
 		c.add(skill);
 
 		// 시즌경기
@@ -50,15 +49,13 @@ public class Chelsea extends JFrame {
 		c.add(btnMatch);
 		btnMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JButton b = (JButton) e.getSource();
-				if (b.getText().equals("시즌경기")) {
-					s.AddSalary(1);
-					salary.setText("급여: " + s.getSalary() + "￡");
-					// 결말
-					if (s.isTranfer() == 4 && s.getTeam() == 3) {
-						dispose();
-						new Ending();
-					}
+				s.AddSalary(s.getChelseaRandSalary());
+				isEnableEvent();
+				refreshSalary();
+				// 결말
+				if (s.isTranfer() == 4 && s.getTeam() == 3) {
+					dispose();
+					new Ending();
 				}
 			}
 		});
@@ -72,7 +69,7 @@ public class Chelsea extends JFrame {
 				JButton b = (JButton) e.getSource();
 				if (b.getText().equals("훈련")) {
 					if (s.tranning()) {
-						skill.setText("실력: " + s.getSkill());
+						refreshSkill();
 						// 결말
 						if (s.isTranfer() == 4 && s.getTeam() == 3) {
 							dispose();
@@ -81,24 +78,39 @@ public class Chelsea extends JFrame {
 					}
 				}
 			};
-
 		});
-		
 		// 린가드의 축구교실
-		JButton btnLingard = new JButton("린가드의 축구교실");
 		c.add(btnLingard);
 		btnLingard.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JButton b = (JButton) e.getSource();
-				if (b.getText().equals("린가드의 축구교실") && s.getSalary() >= 10) {
+				if (s.getSalary() >= s.getEventLingardCost()) {
 					setVisible(false);
 					new LingardSchool();
 				}
 			};
 		});
-		
+
+		isEnableEvent();
 		setSize(450, 530);
+		setLocationRelativeTo(null);
 		setVisible(true);
+	}
+
+	// 재출력
+	void refreshSalary() {
+		salary.setText("급여: " + s.getSalary() + "￡");
+	}
+
+	void refreshSkill() {
+		skill.setText("실력: " + s.getSkill());
+	}
+
+	// 이벤트 활성화
+	void isEnableEvent() {
+		if (s.getSalary() >= s.getEventLingardCost())
+			btnLingard.setEnabled(true);
+		else
+			btnLingard.setEnabled(false);
 	}
 }

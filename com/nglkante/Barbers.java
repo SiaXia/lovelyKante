@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -18,6 +20,9 @@ public class Barbers extends JFrame {
 	private Random rand = new Random();
 
 	Barbers() {
+		LeisterCity l = new LeisterCity();
+		l.setVisible(false);
+
 		// 레이아웃
 		Status s = new Status();
 		Container c = getContentPane();
@@ -34,10 +39,10 @@ public class Barbers extends JFrame {
 		c.add(imageLabel);
 
 		// 안내문
-		JLabel info = new JLabel("-미용실에 간 캉테는 머리를 자르려 합니다-");
-		info.setFont(new Font("맑은고딕", Font.PLAIN, 15));
+		JLabel info = new JLabel("미용실에 간 캉테는 머리를 자르려 합니다");
+		info.setFont(new Font("맑은고딕", Font.BOLD, 17));
 		c.add(info);
-		JLabel info2 = new JLabel("비용은 10￡입니다.");
+		JLabel info2 = new JLabel("비용은 " + s.getEventBarberCost() + "￡입니다.");
 		info2.setFont(new Font("맑은고딕", Font.PLAIN, 15));
 		c.add(info2);
 
@@ -47,16 +52,13 @@ public class Barbers extends JFrame {
 		btnCut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JButton b = (JButton) e.getSource();
-				if (b.getText().equals("자른다")) {
-					s.SubSalary(10);
-					dispose();
-					int r = rand.nextInt(2);
-					if (r == 0)
-						new BarbersSuccess();
-					else
-						new BarbersFailure();
-				}
+				s.SubSalary(s.getEventBarberCost());
+				dispose();
+				int r = rand.nextInt(2);
+				if (r == 0)
+					new BarbersSuccess();
+				else
+					new BarbersFailure();
 			};
 		});
 
@@ -66,13 +68,12 @@ public class Barbers extends JFrame {
 		btnExit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JButton b = (JButton) e.getSource();
-				if (b.getText().equals("나간다")) {
-					dispose();
-				}
+				dispose();
+				l.setVisible(true);
 			};
 		});
 		setSize(350, 500);
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 }

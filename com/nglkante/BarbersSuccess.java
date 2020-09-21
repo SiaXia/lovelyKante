@@ -15,46 +15,44 @@ import javax.swing.JLabel;
 
 public class BarbersSuccess extends JFrame {
 	private Random rand = new Random();
-	LeisterCity l = new LeisterCity();
+	Status s = new Status();
 
 	BarbersSuccess() {
-		Status s = new Status();
-		// Status s = new Status();
+		LeisterCity l = new LeisterCity();
+		l.setVisible(false);
+
 		Container c = getContentPane();
 		setTitle("성공!!!");
 		c.setLayout(new FlowLayout());
 		c.setBackground(Color.WHITE);
 
-		int r1 = rand.nextInt(4);
-		int r2 = rand.nextInt(10);
-
 		// 사진
+		int r = rand.nextInt(4);
 		ImageIcon imageIcon[] = { new ImageIcon("images/hair1.jpg"), new ImageIcon("images/hair2.jpg"),
 				new ImageIcon("images/hair3.jpg"), new ImageIcon("images/hair4.jpg") };
-		JLabel imageLabel = new JLabel(imageIcon[r1]);
+		JLabel imageLabel = new JLabel(imageIcon[r]);
 		c.add(imageLabel);
 
 		// 안내문
-		s.addSkill(r2);
-		JLabel info = new JLabel("캉테는 새로 자른 머리를 좋아합니다. 실력이 " + r2 + "오릅니다.");
+		s.addSkill(s.getEventBarberRand());
+		JLabel info = new JLabel("캉테는 새로 자른 머리를 좋아합니다. 실력이 " + s.getEventBarberRand() + "오릅니다.");
 		info.setFont(new Font("맑은고딕", Font.PLAIN, 15));
 		c.add(info);
 
-		// 신난다
+		// 신난다!
 		JButton btnExit = new JButton("신난다!");
 		c.add(btnExit);
 		btnExit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JButton b = (JButton) e.getSource();
-				if (b.getText().equals("신난다!")) {
-					dispose();
-					l.c.setVisible(true);
-				}
+				dispose();
+				l.setVisible(true);
+				l.refreshSalary();
+				l.refreshSkill();
 			};
 		});
-
-		setSize(350, 460);
+		setSize(380, 460);
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 }

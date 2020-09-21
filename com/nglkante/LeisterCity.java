@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,6 +16,10 @@ import javax.swing.JLabel;
 public class LeisterCity extends JFrame {
 	Container c = getContentPane();
 	Status s = new Status();
+
+	JLabel salary = new JLabel("급여: " + s.getSalary() + "￡");
+	JLabel skill = new JLabel("실력: " + s.getSkill());
+	JButton btnBarbers = new JButton("미용실");
 
 	LeisterCity() {
 		// 레이아웃
@@ -28,7 +33,7 @@ public class LeisterCity extends JFrame {
 		c.add(team);
 
 		// 안내문
-		JLabel info = new JLabel("급여 20￡, 실력 5 이상 이적");
+		JLabel info = new JLabel("급여 " + s.getChelseaSalary() + "￡, 실력 " + s.getChelseaSkill() + "이상 이적");
 		info.setFont(new Font("맑은고딕", Font.PLAIN, 15));
 		c.add(info);
 
@@ -37,12 +42,7 @@ public class LeisterCity extends JFrame {
 		JLabel imageLabel = new JLabel(imageIcon);
 		c.add(imageLabel);
 
-		// 급여
-		JLabel salary = new JLabel("급여: " + s.getSalary() + "￡");
 		c.add(salary);
-
-		// 실력
-		JLabel skill = new JLabel("실력: " + s.getSkill());
 		c.add(skill);
 
 		// 시즌경기
@@ -50,17 +50,16 @@ public class LeisterCity extends JFrame {
 		c.add(btnMatch);
 		btnMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JButton b = (JButton) e.getSource();
-				if (b.getText().equals("시즌경기")) {
-					s.AddSalary(1);
-					salary.setText("급여: " + s.getSalary() + "￡");
-					// 첼시 이적
-					if (s.isTranfer() == 3 && s.getTeam() == 2) {
-						dispose();
-						new Chelsea();
-						s.setTeam();
-					}
-				}
+				s.AddSalary(s.getLeisterCityRandSalary());
+				isEnableEvent();
+				refreshSalary();
+				// 첼시 이적
+				if (s.isTranfer() == 3 && s.getTeam() == 2) {
+					dispose();
+					new Chelsea();
+					s.setTeam(3);
+				} else
+					s.setTeam(2);
 			}
 		});
 
@@ -73,31 +72,49 @@ public class LeisterCity extends JFrame {
 				JButton b = (JButton) e.getSource();
 				if (b.getText().equals("훈련")) {
 					if (s.tranning()) {
-						skill.setText("실력: " + s.getSkill());
+						refreshSkill();
 						// 첼시 이적
 						if (s.isTranfer() == 3 && s.getTeam() == 2) {
 							dispose();
 							new Chelsea();
-							s.setTeam();
-						}
+							s.setTeam(3);
+						} else
+							s.setTeam(2);
 					}
 				}
 			};
 		});
 		// 미용실
-		JButton btnBarbers = new JButton("미용실");
 		c.add(btnBarbers);
 		btnBarbers.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JButton b = (JButton) e.getSource();
-				if (b.getText().equals("미용실") && s.getSalary() >= 10) {
-					setVisible(false);
+				if (s.getSalary() >= s.getEventBarberCost()) {
+					dispose();
 					new Barbers();
 				}
 			};
 		});
+		isEnableEvent();
 		setSize(450, 530);
+		setLocationRelativeTo(null);
 		setVisible(true);
+	}
+
+	// 재출력
+	void refreshSalary() {
+		salary.setText("급여: " + s.getSalary() + "￡");
+	}
+
+	void refreshSkill() {
+		skill.setText("실력: " + s.getSkill());
+	}
+
+	// 이벤트 활성화
+	void isEnableEvent() {
+		if (s.getSalary() >= s.getEventBarberCost())
+			btnBarbers.setEnabled(true);
+		else
+			btnBarbers.setEnabled(false);
 	}
 }

@@ -13,8 +13,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class HowToDance extends JFrame {
-	LeisterCity l=new LeisterCity();
+
+
 	HowToDance() {
+		Chelsea ch = new Chelsea();
+		ch.setVisible(false);
+		
 		Container c = getContentPane();
 		setTitle("´í½º¸¦ ¹è¿ü´Ù!");
 		c.setLayout(new FlowLayout());
@@ -24,27 +28,24 @@ public class HowToDance extends JFrame {
 		ImageIcon imageIcon = new ImageIcon("images/dancingKante.gif");
 		JLabel imageLabel = new JLabel(imageIcon);
 		c.add(imageLabel);
-		
+
 		// ¾È³»¹®
-		JLabel info = new JLabel("Ä²Å×´Â ¸°°¡µå¿¡°Ô ´í½º¸¦ ¹è¿ö °Ñ¸ÚÀÌ µé¾ú½À´Ï´Ù.");
+		JLabel info = new JLabel("     Ä²Å×´Â ¸°°¡µå¿¡°Ô ´í½º¸¦ ¹è¿ö °Ñ¸ÚÀÌ µé¾ú½À´Ï´Ù.     ");
 		info.setFont(new Font("¸¼Àº°íµñ", Font.PLAIN, 15));
 		c.add(info);
-		
+
 		// ±×·¡µµ ±Í¿©¿ö
 		JButton btnExit = new JButton("±×·¡µµ ±Í¿©¿ö");
 		c.add(btnExit);
 		btnExit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JButton b = (JButton) e.getSource();
-				if (b.getText().equals("±×·¡µµ ±Í¿©¿ö")) {
-					dispose();
-					l.c.setVisible(true);
-				}
+				dispose();
+				ch.setVisible(true);
 			};
 		});
-		
-		setSize(400, 460);
+		setSize(480, 380);
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 }

@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,8 +16,11 @@ import javax.swing.JLabel;
 public class SecondDivision extends JFrame {
 	private Container c = getContentPane();
 	Status s = new Status();
+	JLabel salary = new JLabel("급여: " + s.getSalary() + "￡");
+	JLabel skill = new JLabel("실력: " + s.getSkill());
 
 	SecondDivision() {
+
 		// 레이아웃
 		setTitle("SM 캉을 1부리그로 승격시킨 캉요미");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,7 +32,7 @@ public class SecondDivision extends JFrame {
 		c.add(team);
 
 		// 안내문
-		JLabel info = new JLabel("급여 10￡, 실력 1 이상 이적");
+		JLabel info = new JLabel("급여 " + s.getLeisterCitySalary() + "￡, 실력 " + s.getLeisterCitySkill() + "이상 이적");
 		info.setFont(new Font("맑은고딕", Font.PLAIN, 15));
 		c.add(info);
 
@@ -37,12 +41,7 @@ public class SecondDivision extends JFrame {
 		JLabel imageLabel = new JLabel(imageIcon);
 		c.add(imageLabel);
 
-		// 급여
-		JLabel salary = new JLabel("급여: " + s.getSalary() + "￡");
 		c.add(salary);
-
-		// 실력
-		JLabel skill = new JLabel("실력: " + s.getSkill());
 		c.add(skill);
 
 		// 시즌경기
@@ -50,17 +49,15 @@ public class SecondDivision extends JFrame {
 		c.add(btnMatch);
 		btnMatch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JButton b = (JButton) e.getSource();
-				if (b.getText().equals("시즌경기")) {
-					s.AddSalary(1);
-					salary.setText("급여: " + s.getSalary() + "￡");
-					// 레스터 이적
-					if (s.isTranfer() == 2 && s.getTeam() == 1) {
-						setVisible(false);
-						new LeisterCity();
-						s.setTeam();
-					}
-				}
+				s.AddSalary(s.getSecondDivisionRandSalary());
+				refreshSalary();
+				// 레스터 이적
+				if (s.isTranfer() == 2 && s.getTeam() == 1) {
+					dispose();
+					new LeisterCity();
+					s.setTeam(2);
+				} else
+					s.setTeam(1);
 			}
 		});
 
@@ -70,21 +67,30 @@ public class SecondDivision extends JFrame {
 		btnTraining.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JButton b = (JButton) e.getSource();
-				if (b.getText().equals("훈련")) {
-					if (s.tranning()) {
-						skill.setText("실력: " + s.getSkill());
-						// 레스터 이적
-						if (s.isTranfer() == 2 && s.getTeam() == 1) {
-							setVisible(false);
-							new LeisterCity();
-							s.setTeam();
-						}
-					}
+				if (s.tranning()) {
+					refreshSkill();
+					// 레스터 이적
+					if (s.isTranfer() == 2 && s.getTeam() == 1) {
+						dispose();
+						new LeisterCity();
+						s.setTeam(2);
+					} else
+						s.setTeam(1);
 				}
+
 			};
 		});
 		setSize(450, 530);
+		setLocationRelativeTo(null);
 		setVisible(true);
+	}
+
+	// 재출력
+	void refreshSalary() {
+		salary.setText("급여: " + s.getSalary() + "￡");
+	}
+
+	void refreshSkill() {
+		skill.setText("실력: " + s.getSkill());
 	}
 }

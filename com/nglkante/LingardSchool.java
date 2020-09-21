@@ -15,7 +15,11 @@ import javax.swing.JLabel;
 
 public class LingardSchool extends JFrame {
 	private Random rand = new Random();
+
 	LingardSchool() {
+		Chelsea ch = new Chelsea();
+		ch.setVisible(false);
+
 		// 레이아웃
 		Status s = new Status();
 		Container c = getContentPane();
@@ -24,7 +28,7 @@ public class LingardSchool extends JFrame {
 		c.setBackground(Color.WHITE);
 
 		// 안내문
-		JLabel info1 = new JLabel("어서오세요 린가드의 축구교실입니다. 이름이 어떻게 되시죠?");
+		JLabel info1 = new JLabel("어서오세요 린가드의 축구교실입니다. 성함이 어떻게 되시죠?");
 		info1.setFont(new Font("맑은고딕", Font.BOLD, 20));
 		c.add(info1);
 
@@ -34,7 +38,7 @@ public class LingardSchool extends JFrame {
 		c.add(imageLabel);
 
 		// 안내문
-		JLabel info2 = new JLabel("비용은 10￡입니다.");
+		JLabel info2 = new JLabel("비용은 " + s.getEventLingardCost() + "￡입니다.");
 		info2.setFont(new Font("맑은고딕", Font.PLAIN, 15));
 		c.add(info2);
 
@@ -44,16 +48,13 @@ public class LingardSchool extends JFrame {
 		btnLearn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JButton b = (JButton) e.getSource();
-				if (b.getText().equals("축구를 배운다")) {
-					s.SubSalary(10);
-					dispose();
-					int r = rand.nextInt(2);
-					if (r == 0)
-						new HowToPlaySoccer();
-					else
-						new HowToDance();
-				}
+				s.SubSalary(s.getEventLingardCost());
+				dispose();
+				int r = rand.nextInt(2);
+				if (r == 0)
+					new HowToPlaySoccer();
+				else
+					new HowToDance();
 			};
 		});
 
@@ -63,13 +64,13 @@ public class LingardSchool extends JFrame {
 		btnExit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JButton b = (JButton) e.getSource();
-				if (b.getText().equals("나간다")) {
-					dispose();
-				}
+				dispose();
+				ch.setVisible(true);
+				ch.refreshSalary();
 			};
 		});
-		setSize(650, 500);
+		setSize(650, 460);
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 }
