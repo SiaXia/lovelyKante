@@ -38,7 +38,7 @@ public class LingardSchool extends JFrame {
 		c.add(imageLabel);
 
 		// 안내문
-		JLabel info2 = new JLabel("비용은 " + s.getEventLingardCost() + "￡입니다.");
+		JLabel info2 = new JLabel("비용은 " + s.currencyFormat(s.getEventLingardCost()) + "￡입니다.");
 		info2.setFont(new Font("맑은고딕", Font.PLAIN, 15));
 		c.add(info2);
 

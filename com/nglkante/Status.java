@@ -1,5 +1,6 @@
 package com.nglkante;
 
+import java.text.DecimalFormat;
 import java.util.Random;
 
 public class Status {
@@ -11,11 +12,11 @@ public class Status {
 	private int leisterCitySalary = 8000000; // 급여
 	private int chelseaSalary = 32000000;
 	private int endingSalary = 83000000;
-	
+
 	private int leisterCitySkill = 40; // 실력
 	private int chelseaSkill = 250;
 	private int endingSkill = 700;
-	
+
 	private int eventBarberCost = 2000000;
 	private int eventLingardCost = 15000000;
 
@@ -24,7 +25,7 @@ public class Status {
 	private int secondDivisionRandSalary = rand.nextInt(20000);
 	private int leisterCityRandSalary = rand.nextInt(100000);
 	private int chelseaRandSalary = rand.nextInt(300000);
-	
+
 	private int eventBarberRand = rand.nextInt(25) + 1;
 	private int eventLingardRand = rand.nextInt(45) + 1;
 
@@ -79,6 +80,14 @@ public class Status {
 			return 2;
 		else
 			return 1;
+	}
+
+	// 통화 포맷 변경
+	public String currencyFormat(int n) {
+		DecimalFormat df = new DecimalFormat("###,###,###,###");
+		String currency = df.format(n);
+
+		return currency;
 	}
 
 	// getters

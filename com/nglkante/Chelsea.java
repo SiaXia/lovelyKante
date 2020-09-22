@@ -16,7 +16,7 @@ public class Chelsea extends JFrame {
 	Container c = getContentPane();
 	Status s = new Status();
 
-	JLabel salary = new JLabel("급여: " + s.getSalary() + "￡");
+	JLabel salary = new JLabel("급여: " + s.currencyFormat(s.getSalary()) + "￡");
 	JLabel skill = new JLabel("실력: " + s.getSkill());
 	JButton btnLingard = new JButton("축구교실");
 
@@ -32,7 +32,7 @@ public class Chelsea extends JFrame {
 		c.add(team);
 
 		// 안내문
-		JLabel info = new JLabel("급여 " + s.getEndingSalary() + "￡, 실력 " + s.getEndingSkill() + "이상 이적");
+		JLabel info = new JLabel("급여 " + s.currencyFormat(s.getEndingSalary()) + "￡, 실력 " + s.getEndingSkill() + "이상 이적");
 		info.setFont(new Font("맑은고딕", Font.PLAIN, 15));
 		c.add(info);
 
@@ -99,7 +99,7 @@ public class Chelsea extends JFrame {
 
 	// 재출력
 	void refreshSalary() {
-		salary.setText("급여: " + s.getSalary() + "￡");
+		salary.setText("급여: " + s.currencyFormat(s.getSalary()) + "￡");
 	}
 
 	void refreshSkill() {

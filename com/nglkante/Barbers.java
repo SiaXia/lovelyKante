@@ -42,7 +42,7 @@ public class Barbers extends JFrame {
 		JLabel info = new JLabel("미용실에 간 캉테는 머리를 자르려 합니다");
 		info.setFont(new Font("맑은고딕", Font.BOLD, 17));
 		c.add(info);
-		JLabel info2 = new JLabel("비용은 " + s.getEventBarberCost() + "￡입니다.");
+		JLabel info2 = new JLabel("비용은 " + s.currencyFormat(s.getEventBarberCost()) + "￡입니다.");
 		info2.setFont(new Font("맑은고딕", Font.PLAIN, 15));
 		c.add(info2);
 
